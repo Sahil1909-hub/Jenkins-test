@@ -2,11 +2,16 @@ pipeline {
     agent any 
 
     stages {
-        
-        stage('Check Python') {
+
+        stage('Setup Python') {
             steps {
-              bat 'python --version'
+                bat '''
+                python -m venv venv
+                venv\\Scripts\\activate
+                python --version
+                '''
             }
+        }
 }
 
         stage('Install Dependencies') {

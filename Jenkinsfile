@@ -7,28 +7,36 @@ pipeline {
             steps {
                 bat '''
                 python -m venv venv
-                venv\\Scripts\\activate
+                call venv\\Scripts\\activate
                 python --version
                 '''
             }
         }
-}
 
         stage('Install Dependencies') {
             steps {
-                bat 'python -m pip install -r requirements.txt'
+                bat '''
+                call venv\\Scripts\\activate
+                python -m pip install -r requirements.txt
+                '''
             }
         }
 
         stage('Run Tests') {
             steps {
-                bat 'pytest'
+                bat '''
+                call venv\\Scripts\\activate
+                pytest
+                '''
             }
         }
 
         stage('Train Model') {
             steps {
-                bat 'python train.py'
+                bat '''
+                call venv\\Scripts\\activate
+                python train.py
+                '''
             }
         }
 
@@ -51,4 +59,3 @@ pipeline {
         }
     }
 }
-
